@@ -13,9 +13,8 @@ const {
   InteractionManager,
 } = ReactNative;
 
-const ViewPagerAndroid = require('@react-native-community/viewpager');
 const TimerMixin = require('react-timer-mixin');
-const ViewPager = require('@react-native-community/viewpager');
+const ViewPager = require('react-native-pager-view').default;
 
 const SceneComponent = require('./SceneComponent');
 const DefaultTabBar = require('./DefaultTabBar');
@@ -146,7 +145,10 @@ const ScrollableTabView = createReactClass({
         if (this.props.scrollWithoutAnimation) {
           this.scrollView.setPageWithoutAnimation(pageNumber);
         } else {
-          this.scrollView.setPage(pageNumber);
+          // this.scrollView.setPage(pageNumber);
+          this.setState({ page: pageNumber });
+          this.props.onPageSelected?.({ nativeEvent: { position: pageNumber } });
+          // this.props.onPageSelected({ nativeEvent: { position: pageNumber } } as Partial<PagerViewOnPageSelectedEvent>);    
         }
       }
     }
